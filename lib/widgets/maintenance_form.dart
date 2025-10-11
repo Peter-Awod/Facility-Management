@@ -93,31 +93,42 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // name
-                      CustomTextFormField(
-                        keyboardType: TextInputType.name,
-                        textEditingController: nameController,
-                        hintText: 'Enter your full name',
-                        prefixIcon: const Icon(
-                          Icons.person_2_outlined,
+
+                      Text(
+                        BlocProvider.of<UserInfoCubit>(context).userModel!.name,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: kSecondaryColor,
                         ),
-                        onSaved: (value) {
-                          name = value!;
-                        },
-                      ),
-                      const SizedBox(
-                        height: 10,
                       ),
 
-                      // mobile
-                      CustomTextFormField(
-                        textEditingController: mobileNumberController,
-                        hintText: 'Enter your phone number',
-                        prefixIcon: const Icon(Icons.phone_iphone_outlined),
-                        keyboardType: TextInputType.phone,
-                        onSaved: (value) {
-                          mobileNumber = value!;
-                        },
-                      ),
+                      //
+                      // CustomTextFormField(
+                      //   keyboardType: TextInputType.name,
+                      //   textEditingController: nameController,
+                      //   hintText: 'Enter your full name',
+                      //   prefixIcon: const Icon(
+                      //     Icons.person_2_outlined,
+                      //   ),
+                      //   onSaved: (value) {
+                      //     name = value!;
+                      //   },
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      //
+                      // // mobile
+                      // CustomTextFormField(
+                      //   textEditingController: mobileNumberController,
+                      //   hintText: 'Enter your phone number',
+                      //   prefixIcon: const Icon(Icons.phone_iphone_outlined),
+                      //   keyboardType: TextInputType.phone,
+                      //   onSaved: (value) {
+                      //     mobileNumber = value!;
+                      //   },
+                      // ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -283,8 +294,8 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                             formKey.currentState!.save();
                             var formModel = MaintenanceFormModel(
                               formId: '',
-                              name: nameController.text,
-                              phone: mobileNumberController.text,
+                              name: BlocProvider.of<UserInfoCubit>(context).userModel!.name,
+                              phone: BlocProvider.of<UserInfoCubit>(context).userModel!.phone,
                               maintenanceType: maintenanceTypeController.text,
                               buildingNo: buildingNumberController.text,
                               floorNo: floorNumberController.text,
