@@ -12,6 +12,7 @@ import '../shared/constants.dart';
 import '../shared/custom_widgets/custom_material_button.dart';
 import '../shared/custom_widgets/shimmer_view_builder.dart';
 import 'active_complaints_list_view.dart';
+import 'admin/admin.dart';
 import 'complaints_form.dart';
 import 'login/login.dart';
 import 'maintenance_form.dart';
@@ -60,9 +61,7 @@ class HomeWidget extends StatelessWidget {
                     },
                     buttonName: 'Request a service',
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
 
                   // Complaints
                   CustomMaterialButton(
@@ -76,9 +75,7 @@ class HomeWidget extends StatelessWidget {
                     },
                     buttonName: 'Complaints',
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
 
                   // Logout
                   CustomMaterialButton(
@@ -95,20 +92,22 @@ class HomeWidget extends StatelessWidget {
                     },
                     buttonName: 'Logout',
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
 
-                  // // Admin button
-                  // if (user!.isAdmin == true)
-                  //   CustomMaterialButton(
-                  //     onPressed: () {},
-                  //     buttonName: 'Admin',
-                  //   ),
-                  // if (user.isAdmin == true)
-                  //   const SizedBox(
-                  //     height: 20,
-                  //   ),
+                  // Admin button
+                  if (user!.isAdmin == true)
+                    CustomMaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Admin(),
+                          ),
+                        );
+                      },
+                      buttonName: 'Admin',
+                    ),
+                  if (user.isAdmin == true) const SizedBox(height: 20),
 
                   if (user!.isAdmin == false && user.isRequestedService == true)
                     // Contact button
@@ -122,9 +121,7 @@ class HomeWidget extends StatelessWidget {
                       showIcon: true,
                     ),
                   if (user.isAdmin == false && user.isRequestedService == true)
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    const SizedBox(height: 20),
 
                   //Active Complaints
                   if (user.isAdmin == false && user.isComplainActive == true)
