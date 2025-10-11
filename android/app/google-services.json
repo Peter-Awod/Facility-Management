@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784861224585",
+    "project_id": "facility-management-2d97f",
+    "storage_bucket": "facility-management-2d97f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784861224585:android:eef9e94bb0173083273058",
+        "android_client_info": {
+          "package_name": "com.example.facility_management"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbde2VKhNKrbWXKyHpfQ_GleiNlXIrg50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
