@@ -16,20 +16,31 @@ class UserInfoCubit extends Cubit<UserInfoStates> {
   UserModel? userModel;
 
 
-  void getUserInfo() {
+  Future<void> getUserInfo() async{
     emit(GetUserLoadingState());
 
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((value) {
-      userModel = UserModel.fromJson(value.data()!);
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) {
+        emit(GetUserErrorState('No authenticated user found'));
+        return;
+      }
 
+      final snapshot =
+          await FirebaseFirestore.instance.collection('users').doc(userId).get();
 
-      emit(GetUserSuccessState());
-    }).catchError((error) {
+      if (snapshot.exists && snapshot.data() != null) {
+        userModel = UserModel.fromJson(snapshot.data()!);
+        emit(GetUserSuccessState());
+      } else {
+        emit(GetUserErrorState('User data not found'));
+      }
+    } catch (error) {
       emit(GetUserErrorState(error.toString()));
-    });
+    }
+  }
+
+  Future<void> refreshUser() async {
+    await getUserInfo();
   }
 }
