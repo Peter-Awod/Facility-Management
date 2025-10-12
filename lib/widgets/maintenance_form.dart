@@ -219,59 +219,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                         height: 10,
                       ),
 
-                      // permission check box
-                      ListTile(
-                        title: const Text(
-                          'If you want permission click here',
-                          style: TextStyle(
-                            color: kSecondaryColor,
-                            fontSize: 20,
-                          ),
-                        ),
-                        trailing: Checkbox(
-                          value: showPermissionField,
-                          onChanged: (value) {
-                            setState(() {
-                              showPermissionField = value!;
-                            });
-                          },
-                          activeColor: kSecondaryColor,
-                          // Change the color when checkbox is checked
-                          checkColor: Colors.black,
-                          // Change the color of the checkmark
-                          side: const BorderSide(
-                            color: Colors.black,
-                            strokeAlign: 2,
-                          ),
 
-                          fillColor: MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              // Change the color of the checkbox itself based on its state
-                              if (states.contains(MaterialState.selected)) {
-                                return kSecondaryColor; // Color when checkbox is checked
-                              }
-                              return kPrimaryColor; // Color when checkbox is unchecked
-                            },
-                          ),
-                        ),
-                      ),
-                      if (showPermissionField)
-                        const SizedBox(
-                          height: 10,
-                        ),
-
-                      // Permissions
-                      if (showPermissionField)
-                        CustomTextFormField(
-                          textEditingController: permissionDetailsController,
-                          hintText: 'What kind of permission needed?',
-                          prefixIcon: const Icon(Icons.sensor_door_outlined),
-                          keyboardType: TextInputType.text,
-                          onSaved: (value) {
-                            permission = value!;
-                          },
-                          maxLines: 3,
-                        ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -299,13 +247,10 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                               name: BlocProvider.of<UserInfoCubit>(context).userModel!.name,
                               phone: BlocProvider.of<UserInfoCubit>(context).userModel!.phone,
                               maintenanceType: maintenanceTypeController.text,
-                              buildingNo: buildingNumberController.text,
-                              floorNo: floorNumberController.text,
-                              apartmentNo: apartmentNumberController.text,
+
                               addressDetails: addressDetailsController.text,
                               maintenanceDetails:
                                   maintenanceDetailsController.text,
-                              permission: permissionDetailsController.text,
                             );
                             formCubit.submitForm(formModel);
                           } else {

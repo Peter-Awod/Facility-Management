@@ -13,70 +13,49 @@ class MaintenanceFormModel {
   String? maintenanceDetails;
   String requestStatus;
 
-  //// will ignore these data
-  String? permission;
-  final String buildingNo;
-  final String floorNo;
-  final String apartmentNo;
-
-  ////
   MaintenanceFormModel({
     required this.formId,
+    // bank info
     required this.bankName,
     required this.branchName,
     required this.name,
     required this.phone,
     required this.addressDetails,
-
+    // maintenance info
     required this.maintenanceType,
     required this.maintenanceDetails,
     this.requestStatus = 'pending',
-
-    required this.buildingNo,
-    required this.floorNo,
-    required this.apartmentNo,
-    required this.permission,
   });
 
   factory MaintenanceFormModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceFormModel(
       formId: json['formId'],
-
+      // bank info
       bankName: 'bankName',
       branchName: 'branchName',
       name: json['name'],
       phone: json['phone'],
       addressDetails: json['addressDetails'],
-
+      // maintenance info
       maintenanceType: json['maintenanceType'],
       maintenanceDetails: json['maintenanceDetails'],
       requestStatus: json['requestStatus'] ?? 'pending',
-
-      buildingNo: json['buildingNo'],
-      floorNo: json['floorNo'],
-      apartmentNo: json['apartmentNo'],
-      permission: json['permission'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'formId': formId,
-
+      // bank info
       'bankName': bankName,
       'branchName': branchName,
       'name': name,
       'phone': phone,
       'addressDetails': addressDetails,
-
+      // maintenance info
       'maintenanceType': maintenanceType,
       'maintenanceDetails': maintenanceDetails,
       'requestStatus': requestStatus,
-
-      'buildingNo': buildingNo,
-      'floorNo': floorNo,
-      'apartmentNo': apartmentNo,
-      'permission': permission,
     };
   }
 }
