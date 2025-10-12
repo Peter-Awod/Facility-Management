@@ -10,42 +10,43 @@ import 'login_states.dart';
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitialState());
 
-  static LoginCubit get(context) => BlocProvider.of(context);
+  static LoginCubit get(BuildContext context) => BlocProvider.of(context);
 
   // login
-  userLogin(
-      {required String email,
-      required String password,
-      required BuildContext context}) {
+  userLogin({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) {
     emit(LoginLoadingState());
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      emit(LoginSuccessState(value.user!.uid));
-    }).catchError((error) {
-      if (error.toString() ==
-          '[firebase_auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.') {
-        showSnackBar(
-          context: context,
-          message: 'You entered wrong password or wrong email',
-        );
-      } else if (error.toString() ==
-          '[firebase_auth/invalid-email] The email address is badly formatted.') {
-        showSnackBar(
-          context: context,
-          message: 'You are using wrong email format',
-        );
-      }
-      else if (error.code == 'wrong-password')
-      {
-        showSnackBar(
-          context: context,
-          message: 'Wrong password provided for that user.',
-        );
-      }
+          emit(LoginSuccessState(value.user!.uid));
+        })
+        .catchError((error) {
+          if (error.toString() ==
+              '[firebase_auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.') {
+            showSnackBar(
+              context: context,
+              message: 'You entered wrong password or wrong email',
+            );
+          } else if (error.toString() ==
+              '[firebase_auth/invalid-email] The email address is badly formatted.') {
+            showSnackBar(
+              context: context,
+              message: 'You are using wrong email format',
+            );
+          } else {
+            showSnackBar(
+              context: context,
+              message:
+                  'Errorrrrrrrrrrrrrr  ${error.toString()}  Errorrrrrrrrrrrrrr',
+            );
+          }
 
-      emit(LoginErrorState(error.toString()));
-    });
+          emit(LoginErrorState(error.toString()));
+        });
   }
 
   // change password visibility
@@ -56,8 +57,9 @@ class LoginCubit extends Cubit<LoginStates> {
   void changeIcon() {
     isPassword = !isPassword;
 
-    suffix =
-        isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
+    suffix = isPassword
+        ? Icons.visibility_outlined
+        : Icons.visibility_off_outlined;
     emit(LoginChangePassIconState());
   }
 }

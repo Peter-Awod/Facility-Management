@@ -1,39 +1,60 @@
 class MaintenanceFormModel {
-  final String name;
-  final String phone;
-  final String maintenanceType;
   String? formId;
+
+  // bank info
+  final String bankName;
+  final String branchName;
+  final String name; //contact
+  final String phone; //contact
+  String? addressDetails;
+
+  // maintenance info
+  final String maintenanceType;
+  String? maintenanceDetails;
+  String requestStatus;
+
+  //// will ignore these data
+  String? permission;
   final String buildingNo;
   final String floorNo;
   final String apartmentNo;
-  String? addressDetails;
-  String? maintenanceDetails;
-  String? permission;
 
+  ////
   MaintenanceFormModel({
     required this.formId,
+    required this.bankName,
+    required this.branchName,
     required this.name,
     required this.phone,
+    required this.addressDetails,
+
     required this.maintenanceType,
+    required this.maintenanceDetails,
+    this.requestStatus = 'pending',
+
     required this.buildingNo,
     required this.floorNo,
     required this.apartmentNo,
-    required this.addressDetails,
-    required this.maintenanceDetails,
     required this.permission,
   });
 
   factory MaintenanceFormModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceFormModel(
       formId: json['formId'],
+
+      bankName: 'bankName',
+      branchName: 'branchName',
       name: json['name'],
       phone: json['phone'],
+      addressDetails: json['addressDetails'],
+
       maintenanceType: json['maintenanceType'],
+      maintenanceDetails: json['maintenanceDetails'],
+      requestStatus: json['requestStatus'] ?? 'pending',
+
       buildingNo: json['buildingNo'],
       floorNo: json['floorNo'],
       apartmentNo: json['apartmentNo'],
-      addressDetails: json['addressDetails'],
-      maintenanceDetails: json['maintenanceDetails'],
       permission: json['permission'],
     );
   }
@@ -41,14 +62,20 @@ class MaintenanceFormModel {
   Map<String, dynamic> toJson() {
     return {
       'formId': formId,
+
+      'bankName': bankName,
+      'branchName': branchName,
       'name': name,
       'phone': phone,
+      'addressDetails': addressDetails,
+
       'maintenanceType': maintenanceType,
+      'maintenanceDetails': maintenanceDetails,
+      'requestStatus': requestStatus,
+
       'buildingNo': buildingNo,
       'floorNo': floorNo,
       'apartmentNo': apartmentNo,
-      'addressDetails': addressDetails,
-      'maintenanceDetails': maintenanceDetails,
       'permission': permission,
     };
   }

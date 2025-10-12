@@ -55,6 +55,7 @@ class SubmitMaintenanceFormCubit extends Cubit<SubmitMaintenanceFormStates> {
 
 
 
+}
 //   void submitForm(MaintenanceFormModel formModel) {
 //     emit(SubmitFormLoadingState());
 //     FirebaseFirestore.instance
@@ -78,4 +79,3 @@ class SubmitMaintenanceFormCubit extends Cubit<SubmitMaintenanceFormStates> {
 //       emit(SubmitFormFailureState(error: error.toString()));
 //     });
 //   }
-}

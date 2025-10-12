@@ -294,6 +294,8 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                             formKey.currentState!.save();
                             var formModel = MaintenanceFormModel(
                               formId: '',
+                              bankName: '',
+                              branchName: '',
                               name: BlocProvider.of<UserInfoCubit>(context).userModel!.name,
                               phone: BlocProvider.of<UserInfoCubit>(context).userModel!.phone,
                               maintenanceType: maintenanceTypeController.text,
