@@ -23,35 +23,25 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
   var formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
-  var nameController = TextEditingController();
-  var mobileNumberController = TextEditingController();
-  var buildingNumberController = TextEditingController();
-  var floorNumberController = TextEditingController();
-  var apartmentNumberController = TextEditingController();
+  var bankNameController = TextEditingController();
+  var branchNameController = TextEditingController();
   var maintenanceTypeController = TextEditingController();
   var addressDetailsController = TextEditingController();
   var maintenanceDetailsController = TextEditingController();
-  var permissionDetailsController = TextEditingController();
 
-  String? name,
-      mobileNumber,
-      maintenanceType,
-      buildingNumber,
-      floorNumber,
-      permission,
-      apartmentNumber;
-  bool showPermissionField = false;
+  String? bankName, branchName, maintenanceType;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SubmitMaintenanceFormCubit(),
-      child:
-          BlocConsumer<SubmitMaintenanceFormCubit, SubmitMaintenanceFormStates>(
+      child: BlocConsumer<SubmitMaintenanceFormCubit, SubmitMaintenanceFormStates>(
         listener: (context, state) {
           if (state is SubmitFormSuccessState) {
             showSnackBar(
-                context: context, message: 'Form submitted successfully');
+              context: context,
+              message: 'Form submitted successfully',
+            );
             BlocProvider.of<UserInfoCubit>(context).getUserInfo();
             Navigator.pop(context);
           }
@@ -93,7 +83,6 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       // name
-
                       Text(
                         BlocProvider.of<UserInfoCubit>(context).userModel!.name,
                         style: TextStyle(
@@ -103,77 +92,42 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                         ),
                       ),
 
-                      //
-                      // CustomTextFormField(
-                      //   keyboardType: TextInputType.name,
-                      //   textEditingController: nameController,
-                      //   hintText: 'Enter your full name',
-                      //   prefixIcon: const Icon(
-                      //     Icons.person_2_outlined,
-                      //   ),
-                      //   onSaved: (value) {
-                      //     name = value!;
-                      //   },
-                      // ),
-                      // const SizedBox(
-                      //   height: 10,
-                      // ),
-                      //
-                      // // mobile
-                      // CustomTextFormField(
-                      //   textEditingController: mobileNumberController,
-                      //   hintText: 'Enter your phone number',
-                      //   prefixIcon: const Icon(Icons.phone_iphone_outlined),
-                      //   keyboardType: TextInputType.phone,
-                      //   onSaved: (value) {
-                      //     mobileNumber = value!;
-                      //   },
-                      // ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      //building
+                      // bank name
                       CustomTextFormField(
-                        textEditingController: buildingNumberController,
-                        hintText: 'Enter your building number',
-                        prefixIcon: const Icon(Icons.house_outlined),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.name,
+                        textEditingController: bankNameController,
+                        hintText: 'Enter bank name',
+                        prefixIcon: const Icon(Icons.account_balance_outlined),
                         onSaved: (value) {
-                          buildingNumber = value!;
+                          bankName = value!;
                         },
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
-                      // floor
+                      // branch name
                       CustomTextFormField(
-                        textEditingController: floorNumberController,
-                        hintText: 'Enter your floor number',
-                        prefixIcon: const Icon(Icons.house_outlined),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.name,
+                        textEditingController: branchNameController,
+                        hintText: 'Enter branch name',
+                        prefixIcon: const Icon(Icons.account_balance_outlined),
                         onSaved: (value) {
-                          floorNumber = value!;
+                          branchName = value!;
                         },
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
-                      // apartment
+                      // address details
                       CustomTextFormField(
-                        textEditingController: apartmentNumberController,
-                        hintText: 'Enter your apartment number',
-                        prefixIcon: const Icon(Icons.apartment_outlined),
-                        keyboardType: TextInputType.number,
+                        textEditingController: addressDetailsController,
+                        hintText: 'Add more details about address (optional)',
+                        prefixIcon: const Icon(Icons.location_on_outlined),
+                        keyboardType: TextInputType.text,
                         onSaved: (value) {
-                          apartmentNumber = value!;
+                          maintenanceType = value!;
                         },
+                        maxLines: 3,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
                       // maintenance
                       CustomTextFormField(
@@ -185,23 +139,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                           maintenanceType = value!;
                         },
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      // address details
-                      CustomTextFormField(
-                        textEditingController: addressDetailsController,
-                        hintText: 'Add more details about address (optional)',
-                        prefixIcon: const Icon(Icons.location_on_outlined),
-                        keyboardType: TextInputType.text,
-                        onSaved: (value) {
-                          maintenanceType = value!;
-                        }, maxLines: 3,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
                       // maintenance details
                       CustomTextFormField(
@@ -215,14 +153,9 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                         },
                         maxLines: 3,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      const SizedBox(height: 10),
 
-
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
 
                       // Submission button
                       CustomMaterialButton(
@@ -233,19 +166,19 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                           if (maintenanceDetailsController.text.isEmpty) {
                             maintenanceDetailsController.text = 'No details';
                           }
-                          if (permissionDetailsController.text.isEmpty) {
-                            permissionDetailsController.text =
-                                'No Permissions needed';
-                          }
 
                           if (formKey.currentState!.validate()) {
                             formKey.currentState!.save();
                             var formModel = MaintenanceFormModel(
                               formId: '',
-                              bankName: '',
-                              branchName: '',
-                              name: BlocProvider.of<UserInfoCubit>(context).userModel!.name,
-                              phone: BlocProvider.of<UserInfoCubit>(context).userModel!.phone,
+                              bankName: bankNameController.text,
+                              branchName: branchNameController.text,
+                              name: BlocProvider.of<UserInfoCubit>(
+                                context,
+                              ).userModel!.name,
+                              phone: BlocProvider.of<UserInfoCubit>(
+                                context,
+                              ).userModel!.phone,
                               maintenanceType: maintenanceTypeController.text,
 
                               addressDetails: addressDetailsController.text,
