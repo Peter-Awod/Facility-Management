@@ -31,6 +31,21 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
 
   String? bankName, branchName, maintenanceType;
 
+  // Dropdown value for maintenance type
+  String? selectedMaintenanceType;
+
+  // Predefined list of maintenance types
+  final List<String> maintenanceTypes = [
+    'Electrical',
+    'Plumbing',
+    'Air Conditioning',
+    'Cleaning',
+    'Painting',
+    'Carpentry',
+    'Appliance Repair',
+    'Other',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -130,14 +145,38 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                       const SizedBox(height: 10),
 
                       // maintenance
-                      CustomTextFormField(
-                        textEditingController: maintenanceTypeController,
-                        hintText: 'Enter maintenance type',
-                        prefixIcon: const Icon(Icons.engineering_outlined),
-                        keyboardType: TextInputType.text,
-                        onSaved: (value) {
-                          maintenanceType = value!;
+                      DropdownButtonFormField<String>(
+
+                        dropdownColor: kSecondaryColor,
+                        initialValue: selectedMaintenanceType,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: kSecondaryColor,
+                          hintText: 'Select maintenance type',
+                          prefixIcon: const Icon(Icons.engineering_outlined),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              width: 2,
+                              color: kSecondaryColor,
+                            ),
+                          ),
+                        ),
+
+                        items: maintenanceTypes.map((type) {
+                          return DropdownMenuItem<String>(
+                            value: type,
+                            child: Text(type, style: TextStyle()),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedMaintenanceType = value;
+                          });
                         },
+                        validator: (value) => value == null
+                            ? 'Please select a maintenance type'
+                            : null,
                       ),
                       const SizedBox(height: 10),
 
@@ -179,7 +218,8 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                               phone: BlocProvider.of<UserInfoCubit>(
                                 context,
                               ).userModel!.phone,
-                              maintenanceType: maintenanceTypeController.text,
+                              maintenanceType:
+                                  selectedMaintenanceType ?? 'Other',
 
                               addressDetails: addressDetailsController.text,
                               maintenanceDetails:
