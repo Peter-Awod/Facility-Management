@@ -130,7 +130,7 @@ class HomeWidget extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Admin(),
+                              builder: (context) => const MaintenanceRequestsAdminView(),
                             ),
                           );
                         },
