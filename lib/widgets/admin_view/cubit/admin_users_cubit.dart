@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../login/login.dart';
 import 'admin_users_states.dart';
 
 class AdminUsersCubit extends Cubit<AdminUsersState> {
@@ -107,6 +108,17 @@ class AdminUsersCubit extends Cubit<AdminUsersState> {
 
   Future<void> logout(BuildContext context) async {
     await _auth.signOut();
-    Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>const LoginScreen()), (route) => false,);
   }
 }
+//                       onPressed: () {
+//                         FirebaseAuth.instance.signOut().then((value) {
+//                           Navigator.pushAndRemoveUntil(
+//                             context,
+//                             MaterialPageRoute(
+//                               builder: (context) => const LoginScreen(),
+//                             ),
+//                                 (route) => false,
+//                           );
+//                         });
+//                       },
