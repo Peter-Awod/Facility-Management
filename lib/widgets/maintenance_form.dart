@@ -99,7 +99,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                     children: [
                       // name
                       Text(
-                        BlocProvider.of<UserInfoCubit>(context).userModel!.name,
+                        BlocProvider.of<UserInfoCubit>(context).userInfoModel!.name,
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -214,10 +214,10 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                               branchName: branchNameController.text,
                               name: BlocProvider.of<UserInfoCubit>(
                                 context,
-                              ).userModel!.name,
+                              ).userInfoModel!.name,
                               phone: BlocProvider.of<UserInfoCubit>(
                                 context,
-                              ).userModel!.phone,
+                              ).userInfoModel!.phone,
                               maintenanceType:
                                   selectedMaintenanceType ?? 'Other',
 
