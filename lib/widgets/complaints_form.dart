@@ -202,10 +202,10 @@ class _ComplaintsFormState extends State<ComplaintsForm> {
                             formKey.currentState!.save();
                             var complaintsFormModel = ComplaintsFormModel(
                               formId: '',
-                              userId:BlocProvider.of<UserInfoCubit>(context).userModel!.userId ,
+                              userId:BlocProvider.of<UserInfoCubit>(context).userInfoModel!.userId ,
                               complaintNumber: DateTime.now().millisecondsSinceEpoch.toString(),
-                              name: BlocProvider.of<UserInfoCubit>(context).userModel!.name,
-                              phone: BlocProvider.of<UserInfoCubit>(context).userModel!.phone,
+                              name: BlocProvider.of<UserInfoCubit>(context).userInfoModel!.name,
+                              phone: BlocProvider.of<UserInfoCubit>(context).userInfoModel!.phone,
                               buildingNumber: buildingNumberController.text,
                               unitType: unitTypeController.text,
                               unitNumber: unitNumberController.text,

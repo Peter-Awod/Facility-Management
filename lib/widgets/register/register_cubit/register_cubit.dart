@@ -25,13 +25,13 @@ class RegisterCubit extends Cubit<RegisterStates> {
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      UserModel userModel = UserModel(
+      UserInfoModel userModel = UserInfoModel(
         name: name,
         phone: phone,
         email: email,
         userId: value.user!.uid,
-        isAdmin: false,
-        isRequestedService: false,
+        role: 'admin',
+
       );
       createUser(userModel: userModel);
     }).catchError((error) {
@@ -58,8 +58,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
     });
   }
 
-  createUser({required UserModel userModel}) {
-    UserModel model = userModel;
+  createUser({required UserInfoModel userModel}) {
+    UserInfoModel model = userModel;
     FirebaseFirestore.instance
         .collection('users')
         .doc(model.userId)
