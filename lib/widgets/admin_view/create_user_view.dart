@@ -15,7 +15,7 @@ class CreateUserView extends StatefulWidget {
 
 class _CreateUserViewState extends State<CreateUserView> {
   final formKey = GlobalKey<FormState>();
-  String selectedRole = 'Bank';
+  String selectedRole = 'bank';
 
   // Controllers
   final emailController = TextEditingController();
@@ -63,8 +63,8 @@ class _CreateUserViewState extends State<CreateUserView> {
                 initialValue: selectedRole,
                 decoration: const InputDecoration(labelText: "Select Role"),
                 items: const [
-                  DropdownMenuItem(value: 'Bank', child: Text('Bank')),
-                  DropdownMenuItem(value: 'Technician', child: Text('Technician')),
+                  DropdownMenuItem(value: 'bank', child: Text('Bank')),
+                  DropdownMenuItem(value: 'technician', child: Text('Technician')),
                 ],
                 onChanged: (value) => setState(() => selectedRole = value!),
               ),
@@ -87,7 +87,7 @@ class _CreateUserViewState extends State<CreateUserView> {
               ),
               const SizedBox(height: 12),
 
-              if (selectedRole == 'Bank') ...[
+              if (selectedRole == 'bank') ...[
                 CustomTextFormField(
                   keyboardType: TextInputType.text,
                   prefixIcon: const Icon(Icons.account_balance),

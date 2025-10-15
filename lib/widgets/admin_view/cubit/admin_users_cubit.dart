@@ -43,7 +43,7 @@ class AdminUsersCubit extends Cubit<AdminUsersState> {
         'createdAt': DateTime.now().toIso8601String(),
       };
 
-      if (role == 'Bank') {
+      if (role == 'bank') {
         data.addAll({
           'bankName': bankName ?? '',
           'branchName': branchName ?? '',
@@ -51,7 +51,7 @@ class AdminUsersCubit extends Cubit<AdminUsersState> {
           'managerPhone': managerPhone ?? '',
           'branchAddress': branchAddress ?? '',
         });
-      } else if (role == 'Technician') {
+      } else if (role == 'technician') {
         data.addAll({
           'name': name ?? '',
           'jobTitle': jobTitle ?? '',

@@ -8,6 +8,7 @@ import 'cubit/get_complaints_cubit/get_complaints_cubit.dart';
 import 'cubit/user_info_cubit/user_info_cubit.dart';
 import 'firebase_options.dart';
 import 'shared/bloc_observer.dart';
+import 'widgets/admin_view/cubit/admin_users_cubit.dart';
 import 'widgets/login/login.dart';
 import 'widgets/admin_view/admin_home_view.dart';
 import 'widgets/bank_view/bank_home_view.dart';
@@ -17,9 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MSquaredHospitalityServices());
 }
@@ -67,7 +66,12 @@ class MSquaredHospitalityServices extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserInfoCubit()..getUserInfo()),
-        BlocProvider(create: (context) => GetComplaintsCubit()..getComplaints()),
+        BlocProvider(
+          create: (context) => GetComplaintsCubit()..getComplaints(),
+        ),
+        BlocProvider(
+          create: (context) => AdminUsersCubit(), // ✅ Added globally
+        ),
       ],
       child: MaterialApp(
         title: 'MSquared Hospitality Services',
@@ -77,15 +81,11 @@ class MSquaredHospitalityServices extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
+                body: Center(child: CircularProgressIndicator()),
               );
             } else if (snapshot.hasError) {
               return Scaffold(
-                body: Center(
-                  child: Text('Error: ${snapshot.error}'),
-                ),
+                body: Center(child: Text('Error: ${snapshot.error}')),
               );
             } else {
               return snapshot.data!;
