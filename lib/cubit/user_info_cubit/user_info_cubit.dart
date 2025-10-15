@@ -1,46 +1,31 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../models/user_model.dart';
 import 'user_info_states.dart';
 
 class UserInfoCubit extends Cubit<UserInfoStates> {
   UserInfoCubit() : super(UserInfoInitialState());
 
-  static UserInfoCubit get(context) => BlocProvider.of(context);
+  static UserInfoCubit get(BuildContext context) => BlocProvider.of(context);
 
-  // Getting current user information
-  UserModel? userModel;
+  UserInfoModel? userInfoModel;
 
-
-  Future<void> getUserInfo() async{
-    emit(GetUserLoadingState());
-
+  Future<void> getUserInfo() async {
+    emit(UserInfoLoadingState());
     try {
-      final userId = FirebaseAuth.instance.currentUser?.uid;
-      if (userId == null) {
-        emit(GetUserErrorState('No authenticated user found'));
-        return;
-      }
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final snapshot = await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-      final snapshot =
-          await FirebaseFirestore.instance.collection('users').doc(userId).get();
-
-      if (snapshot.exists && snapshot.data() != null) {
-        userModel = UserModel.fromJson(snapshot.data()!);
-        emit(GetUserSuccessState());
+      if (snapshot.exists) {
+        userInfoModel = UserInfoModel.fromJson(snapshot.data()!);
+        emit(UserInfoSuccessState());
       } else {
-        emit(GetUserErrorState('User data not found'));
+        emit(UserInfoErrorState("User data not found."));
       }
-    } catch (error) {
-      emit(GetUserErrorState(error.toString()));
+    } catch (e) {
+      emit(UserInfoErrorState(e.toString()));
     }
-  }
-
-  Future<void> refreshUser() async {
-    await getUserInfo();
   }
 }

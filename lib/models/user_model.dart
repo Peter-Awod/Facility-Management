@@ -1,43 +1,63 @@
-class UserModel {
-  final String name;
-  final String email;
-  final String phone;
+class UserInfoModel {
   final String userId;
-  final bool? isAdmin;
-  final bool? isRequestedService;
-  final bool? isComplainActive;
+  final String email;
+  final String name;
+  final String phone;
+  final String role;
 
-  UserModel({
-    required this.name,
-    required this.email,
-    required this.phone,
+  // Bank fields
+  final String? bankName;
+  final String? branchName;
+  final String? managerName;
+  final String? managerPhone;
+  final String? branchAddress;
+
+  // Technician field
+  final String? jobTitle;
+
+  UserInfoModel({
     required this.userId,
-    this.isAdmin,
-    this.isRequestedService,
-    this.isComplainActive,
+    required this.email,
+    required this.name,
+    required this.phone,
+    required this.role,
+    this.bankName,
+    this.branchName,
+    this.managerName,
+    this.managerPhone,
+    this.branchAddress,
+    this.jobTitle,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
+  factory UserInfoModel.fromJson(Map<String, dynamic> json) {
+    return UserInfoModel(
       userId: json['userId'],
-      isAdmin: json['isAdmin'],
-      isRequestedService: json['isRequestedService'],
-      isComplainActive: json['isComplainActive'],
+      email: json['email'],
+      name: json['name'],
+      phone: json['phone'],
+      role: json['role'],
+      bankName: json['bankName'],
+      branchName: json['branchName'],
+      managerName: json['managerName'],
+      managerPhone: json['managerPhone'],
+      branchAddress: json['branchAddress'],
+      jobTitle: json['jobTitle'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'name': name,
-      'email': email,
-      'phone': phone,
       'userId': userId,
-      'isAdmin': isAdmin,
-      'isRequestedService': isRequestedService,
-      'isComplainActive': isComplainActive,
+      'email': email,
+      'name': name,
+      'phone': phone,
+      'role': role,
+      'bankName': bankName,
+      'branchName': branchName,
+      'managerName': managerName,
+      'managerPhone': managerPhone,
+      'branchAddress': branchAddress,
+      'jobTitle': jobTitle,
     };
   }
 }
