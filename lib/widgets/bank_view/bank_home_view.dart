@@ -135,6 +135,9 @@ class _BankHomeViewState extends State<BankHomeView> {
               final pending = requests
                   .where((r) => r['requestStatus'] == 'pending')
                   .toList();
+              final assigned = requests
+                  .where((r) => r['requestStatus'] == 'assigned')
+                  .toList();
               final inProgress = requests
                   .where((r) => r['requestStatus'] == 'in-progress')
                   .toList();
@@ -152,6 +155,7 @@ class _BankHomeViewState extends State<BankHomeView> {
                   ),
                   const SizedBox(height: 16),
                   _buildSection("Pending", pending, Colors.orangeAccent),
+                  _buildSection("Assigned", assigned, Colors.purple),
                   _buildSection("In Progress", inProgress, Colors.blueAccent),
                   _buildSection("Completed", completed, Colors.green),
                 ],

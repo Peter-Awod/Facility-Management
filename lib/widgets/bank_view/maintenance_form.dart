@@ -38,9 +38,9 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
 
   // Predefined list of maintenance types
   final List<String> maintenanceTypes = [
+    'Hvac',
     'Electrical',
     'Plumbing',
-    'Air Conditioning',
     'Cleaning',
     'Painting',
     'Carpentry',

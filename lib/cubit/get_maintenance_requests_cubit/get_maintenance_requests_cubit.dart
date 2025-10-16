@@ -11,6 +11,7 @@ class GetMaintenanceRequestsCubit extends Cubit<GetMaintenanceRequestsStates> {
 
   List<MaintenanceFormModel> allRequests = [];
   List<MaintenanceFormModel> pendingRequests = [];
+  List<MaintenanceFormModel> assignedRequests = [];
   List<MaintenanceFormModel> inProgressRequests = [];
   List<MaintenanceFormModel> completedRequests = [];
 
@@ -26,6 +27,8 @@ class GetMaintenanceRequestsCubit extends Cubit<GetMaintenanceRequestsStates> {
 
       pendingRequests =
           allRequests.where((r) => r.requestStatus == 'pending').toList();
+      assignedRequests =
+          allRequests.where((r) => r.requestStatus == 'assigned').toList();
       inProgressRequests =
           allRequests.where((r) => r.requestStatus == 'in-progress').toList();
       completedRequests =
