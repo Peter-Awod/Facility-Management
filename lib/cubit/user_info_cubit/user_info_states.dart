@@ -6,6 +6,7 @@ class UserInfoInitialState extends UserInfoStates {}
 class UserInfoLoadingState extends UserInfoStates {}
 
 class UserInfoSuccessState extends UserInfoStates {}
+class UserInfoLoadedState extends UserInfoStates {}
 
 class UserInfoErrorState extends UserInfoStates {
   final String error;

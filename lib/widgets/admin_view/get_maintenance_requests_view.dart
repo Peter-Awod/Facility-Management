@@ -74,8 +74,8 @@ import '../../cubit/get_maintenance_requests_cubit/get_maintenance_requests_stat
 import '../../models/maintenance_form_model.dart';
 import '../../shared/constants.dart';
 
-class MaintenanceRequestsAdminView extends StatelessWidget {
-  const MaintenanceRequestsAdminView({super.key});
+class GetMaintenanceRequestsView extends StatelessWidget {
+  const GetMaintenanceRequestsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,7 @@ class MaintenanceRequestsAdminView extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              '${request.name} • ${request.phone}\n${request.addressDetails ?? ''}',
+              '${request.managerName} • ${request.managerPhone}\n${request.addressDetails ?? ''}',
               style: const TextStyle(color: Colors.white70),
             ),
           ),

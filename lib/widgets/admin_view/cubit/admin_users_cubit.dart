@@ -37,7 +37,7 @@ class AdminUsersCubit extends Cubit<AdminUsersState> {
 
       final uid = userCredential.user!.uid;
       final data = <String, dynamic>{
-        'userID': uid,
+        'userId': uid,
         'email': email,
         'role': role,
         'createdAt': DateTime.now().toIso8601String(),

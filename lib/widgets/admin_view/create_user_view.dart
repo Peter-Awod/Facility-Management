@@ -49,8 +49,18 @@ class _CreateUserViewState extends State<CreateUserView> {
     final adminCubit = context.read<AdminUsersCubit>();
 
     return Scaffold(
+      backgroundColor: kPrimaryColor,
       appBar: AppBar(
-        title: const Text("Create New User"),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            color: kSecondaryColor,
+          ),
+        ),
+        title: const Text("Create New User",style: TextStyle(color: kSecondaryColor),),
         backgroundColor: kPrimaryColor,
       ),
       body: Padding(
@@ -60,8 +70,11 @@ class _CreateUserViewState extends State<CreateUserView> {
           child: ListView(
             children: [
               DropdownButtonFormField<String>(
+                dropdownColor: kSecondaryColor,
                 initialValue: selectedRole,
-                decoration: const InputDecoration(labelText: "Select Role"),
+                decoration: const InputDecoration(labelText: "Select Role",
+                  filled: true,
+                  fillColor: kSecondaryColor,),
                 items: const [
                   DropdownMenuItem(value: 'bank', child: Text('Bank')),
                   DropdownMenuItem(value: 'technician', child: Text('Technician')),

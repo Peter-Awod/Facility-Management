@@ -3,14 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/submit_maintenance_form_cubit/submit_maintenance_form_cubit.dart';
-import '../cubit/submit_maintenance_form_cubit/submit_maintenance_form_states.dart';
-import '../cubit/user_info_cubit/user_info_cubit.dart';
-import '../models/maintenance_form_model.dart';
-import '../shared/constants.dart';
-import '../shared/custom_widgets/custom_material_button.dart';
-import '../shared/custom_widgets/custom_text_form_field.dart';
-import '../shared/custom_widgets/snack_bar.dart';
+import '../../cubit/submit_maintenance_form_cubit/submit_maintenance_form_cubit.dart';
+import '../../cubit/submit_maintenance_form_cubit/submit_maintenance_form_states.dart';
+import '../../cubit/user_info_cubit/user_info_cubit.dart';
+import '../../models/maintenance_form_model.dart';
+import '../../shared/constants.dart';
+import '../../shared/custom_widgets/custom_material_button.dart';
+import '../../shared/custom_widgets/custom_text_form_field.dart';
+import '../../shared/custom_widgets/snack_bar.dart';
 
 class MaintenanceForm extends StatefulWidget {
   const MaintenanceForm({super.key});
@@ -23,6 +23,8 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
   var formKey = GlobalKey<FormState>();
   AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
 
+  var managerNameController = TextEditingController();
+  var managerPhoneController = TextEditingController();
   var bankNameController = TextEditingController();
   var branchNameController = TextEditingController();
   var maintenanceTypeController = TextEditingController();
@@ -97,15 +99,7 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // name
-                      Text(
-                        BlocProvider.of<UserInfoCubit>(context).userInfoModel!.name,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: kSecondaryColor,
-                        ),
-                      ),
+                      const SizedBox(height: 10),
 
                       // bank name
                       CustomTextFormField(
@@ -130,6 +124,26 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                         },
                       ),
                       const SizedBox(height: 10),
+                      CustomTextFormField(
+                        keyboardType: TextInputType.name,
+                        textEditingController: managerNameController,
+                        hintText: 'Enter manager name',
+                        prefixIcon: const Icon(Icons.person_outline_outlined),
+                        onSaved: (value) {
+                          branchName = value!;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      CustomTextFormField(
+                        keyboardType: TextInputType.phone,
+                        textEditingController: managerPhoneController,
+                        hintText: 'Enter manager phone',
+                        prefixIcon: const Icon(Icons.phone),
+                        onSaved: (value) {
+                          branchName = value!;
+                        },
+                      ),
+                      const SizedBox(height: 10),
 
                       // address details
                       CustomTextFormField(
@@ -146,7 +160,6 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
 
                       // maintenance
                       DropdownButtonFormField<String>(
-
                         dropdownColor: kSecondaryColor,
                         initialValue: selectedMaintenanceType,
                         decoration: InputDecoration(
@@ -210,14 +223,11 @@ class _MaintenanceFormState extends State<MaintenanceForm> {
                             formKey.currentState!.save();
                             var formModel = MaintenanceFormModel(
                               formId: '',
+                              userId: BlocProvider.of<UserInfoCubit>(context).userInfoModel!.userId,
                               bankName: bankNameController.text,
                               branchName: branchNameController.text,
-                              name: BlocProvider.of<UserInfoCubit>(
-                                context,
-                              ).userInfoModel!.name,
-                              phone: BlocProvider.of<UserInfoCubit>(
-                                context,
-                              ).userInfoModel!.phone,
+                              managerName: managerNameController.text,
+                              managerPhone: managerPhoneController.text,
                               maintenanceType:
                                   selectedMaintenanceType ?? 'Other',
 
