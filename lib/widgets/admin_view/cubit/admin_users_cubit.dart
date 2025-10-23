@@ -94,31 +94,11 @@ class AdminUsersCubit extends Cubit<AdminUsersState> {
     }
   }
 
-  //
-  // Future<void> fetchUsers() async {
-  //   try {
-  //     emit(AdminUsersLoadingState());
-  //     final snapshot = await _firestore.collection('users').get();
-  //     final users = snapshot.docs.map((d) => d.data()).toList();
-  //     emit(AdminUsersLoadedState(List<Map<String, dynamic>>.from(users)));
-  //   } catch (e) {
-  //     emit(AdminUsersErrorState(e.toString()));
-  //   }
-  // }
+
 
   Future<void> logout(BuildContext context) async {
     await _auth.signOut();
     Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=>const LoginScreen()), (route) => false,);
   }
 }
-//                       onPressed: () {
-//                         FirebaseAuth.instance.signOut().then((value) {
-//                           Navigator.pushAndRemoveUntil(
-//                             context,
-//                             MaterialPageRoute(
-//                               builder: (context) => const LoginScreen(),
-//                             ),
-//                                 (route) => false,
-//                           );
-//                         });
-//                       },
+

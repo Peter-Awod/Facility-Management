@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'cubit/get_complaints_cubit/get_complaints_cubit.dart';
 import 'cubit/user_info_cubit/user_info_cubit.dart';
 import 'firebase_options.dart';
 import 'shared/bloc_observer.dart';
@@ -66,9 +65,7 @@ class MSquaredHospitalityServices extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => UserInfoCubit()..getUserInfo()),
-        BlocProvider(
-          create: (context) => GetComplaintsCubit()..getComplaints(),
-        ),
+
         BlocProvider(
           create: (context) => AdminUsersCubit(), // ✅ Added globally
         ),
