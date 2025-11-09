@@ -1,15 +1,16 @@
 import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:facility_management/shared/constants.dart';
-import 'package:facility_management/widgets/login/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'shared/constants.dart';
 import 'widgets/admin_view/admin_home_view.dart';
 import 'widgets/bank_view/bank_home_view.dart';
+import 'widgets/login/login.dart';
 import 'widgets/technician_view/technician_home_view.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final checkResult = await _checkVersion(widget.remoteConfig);
 
     if (checkResult == VersionStatus.forceUpdate) {
-      return const ForceUpdateScreen();
+      return ForceUpdateScreen(remoteConfig: widget.remoteConfig); // 👈 pass it
     } else if (checkResult == VersionStatus.softUpdate) {
       // Show soft update dialog but allow use
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -113,6 +114,10 @@ class _SplashScreenState extends State<SplashScreen> {
 
   /// ⚠️ Soft update dialog
   void _showSoftUpdateDialog(BuildContext context) {
+    final updateUrl = widget.remoteConfig.getString(
+      'update_url',
+    ); // 👈 Get from Remote Config
+
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -129,22 +134,19 @@ class _SplashScreenState extends State<SplashScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            // Continue using app
-            child: const Text('Later',style: TextStyle(color: kTabsColor),),
+            child: const Text('Later', style: TextStyle(color: kTabsColor)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: kTabsColor),
             onPressed: () async {
-              const url =
-                  "https://drive.google.com/file/d/1Ylt58n0Wo4zmp_crDeU6FTZHFybusDvk/view?usp=drive_link"; // TODO: change to your APK link
-              if (await canLaunchUrl(Uri.parse(url))) {
+              if (await canLaunchUrl(Uri.parse(updateUrl))) {
                 await launchUrl(
-                  Uri.parse(url),
+                  Uri.parse(updateUrl),
                   mode: LaunchMode.externalApplication,
                 );
               }
             },
-            child: const Text('Update',style: TextStyle(color: kPrimaryColor),),
+            child: const Text('Update', style: TextStyle(color: kPrimaryColor)),
           ),
         ],
       ),
@@ -199,10 +201,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
 /// 🔹 Force Update Screen (Blocks App)
 class ForceUpdateScreen extends StatelessWidget {
-  const ForceUpdateScreen({super.key});
+  final FirebaseRemoteConfig remoteConfig; // 👈 add this
+
+  const ForceUpdateScreen({super.key, required this.remoteConfig});
 
   @override
   Widget build(BuildContext context) {
+    final updateUrl = remoteConfig.getString(
+      'update_url',
+    ); // 👈 fetch from Remote Config
+
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
@@ -237,11 +245,9 @@ class ForceUpdateScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () async {
-                  const url =
-                      "https://drive.google.com/file/d/1Ylt58n0Wo4zmp_crDeU6FTZHFybusDvk/view?usp=drive_link"; // TODO: change link
-                  if (await canLaunchUrl(Uri.parse(url))) {
+                  if (await canLaunchUrl(Uri.parse(updateUrl))) {
                     await launchUrl(
-                      Uri.parse(url),
+                      Uri.parse(updateUrl),
                       mode: LaunchMode.externalApplication,
                     );
                   }
